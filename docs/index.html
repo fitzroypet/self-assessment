@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Maturity Assessment</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Analytics Maturity Assessment</h1>
+        <form id="assessment-form">
+            <label>Company Name:<input type="text" name="company_name" required></label>
+            <label>Industry:<input type="text" name="industry" required></label>
+            <div id="areas-container"></div>
+            <button type="submit">Submit Assessment</button>
+        </form>
+        <div id="results" class="hidden">
+            <h2>Assessment Results</h2>
+            <pre id="results-json"></pre>
+            <button id="download-report" class="hidden">Download Report</button>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html> 
