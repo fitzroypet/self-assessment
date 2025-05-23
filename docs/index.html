@@ -3,23 +3,179 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Analytics Maturity Assessment</title>
+    <title>Analytics Maturity Self-Assessment</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Analytics Maturity Assessment</h1>
-        <form id="assessment-form">
-            <label>Company Name:<input type="text" name="company_name" required></label>
-            <label>Industry:<input type="text" name="industry" required></label>
-            <div id="areas-container"></div>
-            <button type="submit">Submit Assessment</button>
+        <!-- Welcome Section -->
+        <section id="welcome-section" class="step-section">
+            <h1>Welcome to the Analytics Maturity Self-Assessment</h1>
+            <p>Unlock your business's data potential in the AI age.<br>
+            Today's most successful organizations harness data and analytics to make smarter decisions, drive growth, and stay ahead of the competition. Whether you're just starting your analytics journey or looking to advance to the next level, understanding your current maturity is the first step.</p>
+            <h3>What to expect:</h3>
+            <ul>
+                <li>This quick assessment will help you evaluate your company's analytics capabilities across key areas, from data collection to decision-making and AI adoption.</li>
+                <li>Your honest responses will generate a personalized report with actionable recommendations tailored to your business stage and goals.</li>
+                <li>The process takes just a few minutes and is designed specifically for small and medium-sized businesses.</li>
+            </ul>
+            <h3>Why take this assessment?</h3>
+            <ul>
+                <li>Identify your strengths and opportunities in data and analytics.</li>
+                <li>Receive practical next steps to move your business forward.</li>
+                <li>Benchmark your progress as you grow.</li>
+            </ul>
+            <button id="start-btn">Let's get started!</button>
+        </section>
+
+        <!-- Multi-step Assessment Form -->
+        <form id="assessment-form" class="hidden">
+            <!-- Step 1: Basic Information -->
+            <section id="step-1" class="step-section hidden">
+                <h2>Section 1: Basic Information</h2>
+                <label>Email Address*:<br><input type="email" name="email" required></label>
+                <label>Company Name:<br><input type="text" name="company_name" required></label>
+                <label>Industry:<br>
+                    <select name="industry" required>
+                        <option value="">Select industry...</option>
+                        <option>Recycling</option>
+                        <option>Manufacturing</option>
+                        <option>Services</option>
+                        <option>Healthcare</option>
+                        <option>Technology</option>
+                        <option>Agriculture</option>
+                        <option>Other</option>
+                    </select>
+                </label>
+                <label>Company Size:<br>
+                    <select name="company_size" required>
+                        <option value="">Select size...</option>
+                        <option>1–9 employees</option>
+                        <option>10–49 employees</option>
+                        <option>50–99 employees</option>
+                        <option>100–249 employees</option>
+                        <option>250–499 employees</option>
+                        <option>500+ employees</option>
+                    </select>
+                </label>
+                <div class="form-nav">
+                    <button type="button" id="to-step-2">Next</button>
+                </div>
+            </section>
+
+            <!-- Step 2: Maturity Dimensions -->
+            <section id="step-2" class="step-section hidden">
+                <h2>Section 2: Maturity Dimensions</h2>
+                <div class="dimension-block">
+                    <h3>1. Data Collection</h3>
+                    <label>How would you rate your data collection process?
+                        <select name="data_collection_rating" required>
+                            <option value="">Select...</option>
+                            <option>Basic: Mostly manual (e.g., paper, spreadsheets)</option>
+                            <option>Developing: Some automation, partial integration</option>
+                            <option>Advanced: Automated, integrated across systems</option>
+                        </select>
+                    </label>
+                    <label>Please explain your data collection process.
+                        <textarea name="data_collection_explanation" rows="2" required placeholder="Describe tools, frequency, challenges, or recent improvements"></textarea>
+                    </label>
+                </div>
+                <div class="dimension-block">
+                    <h3>2. Reporting</h3>
+                    <label>How would you rate your reporting capabilities?
+                        <select name="reporting_rating" required>
+                            <option value="">Select...</option>
+                            <option>Basic: Static reports, limited sharing</option>
+                            <option>Developing: Dashboards, some automation, regular updates</option>
+                            <option>Advanced: Real-time, interactive, self-service dashboards</option>
+                        </select>
+                    </label>
+                    <label>Please explain your reporting approach.
+                        <textarea name="reporting_explanation" rows="2" required placeholder="What tools do you use? Who creates and uses reports?"></textarea>
+                    </label>
+                </div>
+                <div class="dimension-block">
+                    <h3>3. Analytics Type</h3>
+                    <label>What best describes the type of analytics you use?
+                        <select name="analytics_type_rating" required>
+                            <option value="">Select...</option>
+                            <option>Basic: Descriptive only (what happened)</option>
+                            <option>Developing: Diagnostic (why it happened), some trend analysis</option>
+                            <option>Advanced: Predictive/prescriptive (what will/might happen, what to do next)</option>
+                        </select>
+                    </label>
+                    <label>Please explain your analytics use.
+                        <textarea name="analytics_type_explanation" rows="2" required placeholder="Give examples—trend analysis, forecasting, scenario planning, etc."></textarea>
+                    </label>
+                </div>
+                <div class="dimension-block">
+                    <h3>4. Tool Usage</h3>
+                    <label>How would you rate your analytics tool usage?
+                        <select name="tool_usage_rating" required>
+                            <option value="">Select...</option>
+                            <option>Basic: Spreadsheets only (Excel, Google Sheets)</option>
+                            <option>Developing: BI tools (Power BI, Tableau, Google Data Studio)</option>
+                            <option>Advanced: AI/ML tools (AutoML, DataRobot, custom AI, chatbots)</option>
+                        </select>
+                    </label>
+                    <label>Please explain your analytics toolset.
+                        <textarea name="tool_usage_explanation" rows="2" required placeholder="List main tools, recent upgrades, integration level, etc."></textarea>
+                    </label>
+                </div>
+                <div class="dimension-block">
+                    <h3>5. Decision-Making</h3>
+                    <label>How would you describe your decision-making process?
+                        <select name="decision_making_rating" required>
+                            <option value="">Select...</option>
+                            <option>Basic: Mostly intuition/gut feeling</option>
+                            <option>Developing: Data-informed, some data-driven decisions</option>
+                            <option>Advanced: Data-driven, automated or AI-assisted decisions</option>
+                        </select>
+                    </label>
+                    <label>Please explain how data influences your decisions.
+                        <textarea name="decision_making_explanation" rows="2" required placeholder="Examples of recent data-driven decisions, or where data is underused"></textarea>
+                    </label>
+                </div>
+                <div class="dimension-block">
+                    <h3>6. Skills</h3>
+                    <label>How would you rate your team's analytics skills?
+                        <select name="skills_rating" required>
+                            <option value="">Select...</option>
+                            <option>Basic: One or few data-savvy people, limited training</option>
+                            <option>Developing: Some trained staff, ongoing upskilling</option>
+                            <option>Advanced: Cross-team data literacy, analytics champions, regular training</option>
+                        </select>
+                    </label>
+                    <label>Please explain your team's analytics skills and training.
+                        <textarea name="skills_explanation" rows="2" required placeholder="Mention certifications, training programs, or skill gaps"></textarea>
+                    </label>
+                </div>
+                <div class="dimension-block">
+                    <h3>7. Additional Comments</h3>
+                    <label>Is there anything else you'd like to share about your analytics journey, challenges, or goals?
+                        <textarea name="additional_comments" rows="2" placeholder="(Optional)"></textarea>
+                    </label>
+                </div>
+                <div class="form-nav">
+                    <button type="button" id="back-to-step-1">Back</button>
+                    <button type="submit">Submit Assessment</button>
+                </div>
+            </section>
         </form>
-        <div id="results" class="hidden">
-            <h2>Assessment Results</h2>
-            <pre id="results-json"></pre>
-            <button id="download-report" class="hidden">Download Report</button>
-        </div>
+
+        <!-- Thank You Section -->
+        <section id="thankyou-section" class="step-section hidden">
+            <h2>Thank You for Completing the Analytics Maturity Assessment!</h2>
+            <p>Your responses have been submitted successfully.<br>
+            We're analyzing your answers to create a personalized report with clear, actionable recommendations for advancing your analytics journey.</p>
+            <h3>What's next?</h3>
+            <ul>
+                <li>Please check your email shortly for your detailed Analytics Maturity Report.</li>
+                <li>Review your results, share them with your team, and use the insights to guide your next steps.</li>
+                <li>If you don't see the email within a few minutes, please check your spam or promotions folder.</li>
+            </ul>
+            <p>Thank you for taking a proactive step toward unlocking the full value of data and analytics in your business!</p>
+        </section>
     </div>
     <script src="app.js"></script>
 </body>

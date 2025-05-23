@@ -1,73 +1,86 @@
-// Default assessment areas
-const ASSESSMENT_AREAS = [
-    'Strategy',
-    'Data',
-    'Technology',
-    'People',
-    'Process'
-];
+// Multi-step form navigation and logic
 
-// Dynamically render assessment area fields
-const areasContainer = document.getElementById('areas-container');
-ASSESSMENT_AREAS.forEach(area => {
-    const div = document.createElement('div');
-    div.className = 'area-block';
-    div.innerHTML = `
-        <h3>${area}</h3>
-        <label>Rating:
-            <select name="${area.toLowerCase()}_rating" required>
-                <option value="">Select...</option>
-                <option value="Basic">Basic</option>
-                <option value="Intermediate">Intermediate</option>
-                <option value="Advanced">Advanced</option>
-            </select>
-        </label>
-        <label>Explanation:
-            <textarea name="${area.toLowerCase()}_explanation" rows="2" required></textarea>
-        </label>
-    `;
-    areasContainer.appendChild(div);
-});
+document.addEventListener('DOMContentLoaded', () => {
+    // Sections
+    const welcomeSection = document.getElementById('welcome-section');
+    const form = document.getElementById('assessment-form');
+    const step1 = document.getElementById('step-1');
+    const step2 = document.getElementById('step-2');
+    const thankyouSection = document.getElementById('thankyou-section');
 
-// Handle form submission
-const form = document.getElementById('assessment-form');
-const resultsDiv = document.getElementById('results');
-const resultsJson = document.getElementById('results-json');
-const downloadBtn = document.getElementById('download-report');
+    // Buttons
+    const startBtn = document.getElementById('start-btn');
+    const toStep2Btn = document.getElementById('to-step-2');
+    const backToStep1Btn = document.getElementById('back-to-step-1');
 
-form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const formData = new FormData(form);
-    const data = {};
-    formData.forEach((value, key) => {
-        data[key] = value;
+    // Show only the given section
+    function showSection(section) {
+        [welcomeSection, form, step1, step2, thankyouSection].forEach(s => {
+            if (s) s.classList.add('hidden');
+        });
+        if (section) section.classList.remove('hidden');
+    }
+
+    // Start assessment
+    startBtn.addEventListener('click', () => {
+        showSection(form);
+        showSection(step1);
     });
 
-    // POST to Flask API (adjust URL for production)
-    const apiUrl = 'http://localhost:5000/api/analyze';
-    resultsJson.textContent = 'Loading...';
-    resultsDiv.classList.remove('hidden');
-    downloadBtn.classList.add('hidden');
-
-    try {
-        const response = await fetch(apiUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        });
-        const result = await response.json();
-        if (result.analysis) {
-            resultsJson.textContent = JSON.stringify(result.analysis, null, 2);
-            if (result.report_path) {
-                downloadBtn.classList.remove('hidden');
-                downloadBtn.onclick = () => {
-                    window.open('http://localhost:5000' + result.report_path, '_blank');
-                };
-            }
-        } else {
-            resultsJson.textContent = result.error || 'Unexpected error.';
+    // Next to Step 2
+    toStep2Btn.addEventListener('click', () => {
+        // Validate Step 1
+        const email = form.elements['email'].value.trim();
+        const company = form.elements['company_name'].value.trim();
+        const industry = form.elements['industry'].value;
+        const size = form.elements['company_size'].value;
+        if (!email || !company || !industry || !size) {
+            alert('Please fill in all required fields.');
+            return;
         }
-    } catch (err) {
-        resultsJson.textContent = 'Error: ' + err.message;
-    }
+        showSection(form);
+        showSection(step2);
+    });
+
+    // Back to Step 1
+    backToStep1Btn.addEventListener('click', () => {
+        showSection(form);
+        showSection(step1);
+    });
+
+    // Handle form submission
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        // Validate Step 2 required fields
+        const requiredFields = [
+            'data_collection_rating', 'data_collection_explanation',
+            'reporting_rating', 'reporting_explanation',
+            'analytics_type_rating', 'analytics_type_explanation',
+            'tool_usage_rating', 'tool_usage_explanation',
+            'decision_making_rating', 'decision_making_explanation',
+            'skills_rating', 'skills_explanation'
+        ];
+        for (const name of requiredFields) {
+            const el = form.elements[name];
+            if (el && !el.value.trim()) {
+                alert('Please fill in all required fields.');
+                el.focus();
+                return;
+            }
+        }
+        // Prepare data
+        const formData = new FormData(form);
+        const data = {};
+        formData.forEach((value, key) => {
+            data[key] = value;
+        });
+        // POST to backend (adjust URL as needed)
+        // const apiUrl = 'http://localhost:5000/api/analyze';
+        // await fetch(apiUrl, { ... });
+        // For now, just show thank you
+        showSection(thankyouSection);
+    });
+
+    // Initial state
+    showSection(welcomeSection);
 }); 
